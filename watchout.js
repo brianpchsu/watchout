@@ -71,6 +71,28 @@ function update(){
     .duration(1000)
     .attr("cx", randomGenerator)
     .attr("cy", randomGenerator);
+  // if isCollided
+}
+
+
+
+var checkCollision = function() {
+  // console.log(player)
+
+  d3.selectAll(".enemy").each(function(d){
+    var playerX = d3.select('.player').attr('cx');
+    var playerY = d3.select('.player').attr('cy');
+    var currentEnemy = d3.select(this);
+    // console.log(this.attr('cy'));
+    var dis = Math.sqrt(Math.pow(currentEnemy.attr('cx') - playerX,2) + Math.pow(currentEnemy.attr('cy') - playerY,2));
+
+    if (dis < 10) {
+      console.log(dis);
+      var isCollided = parseInt(d3.select('#numCollisions').text());
+      isCollided += 1;
+      d3.select('#numCollisions').text(isCollided);
+    }
+  });
 }
 
 init(createEnemies(10), "red");
@@ -78,6 +100,7 @@ init(createEnemies(10), "red");
 
 setInterval(function(){
   update();
-}, 2000);
+}, 1000);
 
+setInterval(checkCollision, 20);
 
